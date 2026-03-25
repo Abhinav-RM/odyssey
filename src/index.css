@@ -1,0 +1,528 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
+
+:root {
+  --bg: #050505;
+  --text: #ffffff;
+  --ion-blue: #00d2ff;
+  --ion-glow: 0 0 20px rgba(0, 210, 255, 0.4), 0 0 40px rgba(0, 210, 255, 0.2);
+  --ion-glow-strong: 0 0 20px rgba(0, 210, 255, 0.6), 0 0 60px rgba(0, 210, 255, 0.3), 0 0 100px rgba(0, 210, 255, 0.1);
+  --glass-bg: rgba(255, 255, 255, 0.04);
+  --glass-border: rgba(0, 210, 255, 0.15);
+  --glass-blur: blur(20px);
+}
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+html::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Space Mono', monospace;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Loading Screen ─── */
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+}
+
+.loading-title {
+  font-size: 14px;
+  letter-spacing: 8px;
+  text-transform: uppercase;
+  color: var(--ion-blue);
+  text-shadow: var(--ion-glow);
+}
+
+.loading-bar-container {
+  width: 240px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 1px;
+  overflow: hidden;
+}
+
+.loading-bar {
+  height: 100%;
+  background: var(--ion-blue);
+  box-shadow: var(--ion-glow);
+  border-radius: 1px;
+  transition: width 0.1s linear;
+}
+
+.loading-percent {
+  font-size: 11px;
+  letter-spacing: 4px;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+/* ─── Scroll Explode ─── */
+.scroll-container {
+  position: relative;
+  width: 100%;
+}
+
+.scroll-canvas-wrapper {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.scroll-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* ─── Spec Cards ─── */
+.specs-section {
+  position: relative;
+  z-index: 2;
+  padding: 120px 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.specs-header {
+  text-align: center;
+  margin-bottom: 80px;
+}
+
+.specs-header h2 {
+  font-size: clamp(28px, 5vw, 48px);
+  font-weight: 700;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.specs-header .accent-line {
+  width: 60px;
+  height: 2px;
+  background: var(--ion-blue);
+  box-shadow: var(--ion-glow);
+  margin: 24px auto 0;
+}
+
+.specs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.spec-card {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 40px 32px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.3s ease;
+}
+
+.spec-card:hover {
+  border-color: rgba(0, 210, 255, 0.4);
+}
+
+.spec-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--ion-blue), transparent);
+  opacity: 0.4;
+}
+
+.spec-label {
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--ion-blue);
+  text-shadow: 0 0 10px rgba(0, 210, 255, 0.3);
+  margin-bottom: 12px;
+}
+
+.spec-value {
+  font-size: clamp(22px, 3vw, 32px);
+  font-weight: 700;
+  letter-spacing: 2px;
+  line-height: 1.2;
+}
+
+.spec-desc {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.4);
+  margin-top: 12px;
+  letter-spacing: 1px;
+  line-height: 1.6;
+}
+
+/* ─── Launch Button ─── */
+.launch-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 120px 24px 160px;
+  position: relative;
+  z-index: 2;
+}
+
+.launch-btn {
+  position: relative;
+  background: transparent;
+  border: 1px solid var(--ion-blue);
+  color: var(--text);
+  font-family: 'Space Mono', monospace;
+  font-size: clamp(16px, 3vw, 22px);
+  letter-spacing: 8px;
+  text-transform: uppercase;
+  padding: 20px 48px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: var(--ion-glow);
+}
+
+.launch-btn:hover {
+  background: rgba(0, 210, 255, 0.08);
+  box-shadow: var(--ion-glow-strong);
+  transform: scale(1.02);
+}
+
+.launch-btn::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: linear-gradient(45deg, transparent, var(--ion-blue), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.launch-btn:hover::before {
+  opacity: 0.15;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: var(--ion-glow); }
+  50% { box-shadow: var(--ion-glow-strong); }
+}
+
+.launch-btn {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+/* ─── Transition Overlay ─── */
+.transition-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  z-index: 10000;
+  pointer-events: none;
+}
+
+/* ─── Flight Scene ─── */
+.flight-scene {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+}
+
+.flight-canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* ─── Planet Label ─── */
+.planet-label {
+  pointer-events: none;
+  text-align: center;
+  white-space: nowrap;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 210, 255, 0.2);
+  border-radius: 12px;
+  padding: 16px 24px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(0, 210, 255, 0.05);
+  transform: translate3d(0, -20px, 0);
+  will-change: transform;
+}
+
+.planet-label-name {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 8px;
+  text-transform: uppercase;
+  color: var(--text);
+  text-shadow: 0 0 15px rgba(0, 210, 255, 0.8);
+  margin-bottom: 8px;
+  position: relative;
+  display: inline-block;
+}
+
+.planet-label-name::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 20%;
+  right: 20%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--ion-blue), transparent);
+}
+
+.planet-label-desc {
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.6;
+  white-space: pre-line;
+  margin-top: 12px;
+}
+
+/* ─── HUD Top Left (Now contains Back Button + Title) ─── */
+.hud-top-left {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  pointer-events: auto;
+}
+
+.hud-back-btn {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  color: rgba(255, 255, 255, 0.6);
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: fit-content;
+}
+
+.hud-back-btn:hover {
+  background: rgba(0, 210, 255, 0.1);
+  color: var(--text);
+  border-color: var(--ion-blue);
+  box-shadow: 0 0 15px rgba(0, 210, 255, 0.2);
+}
+
+.hud-title {
+  font-size: 11px;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: var(--ion-blue);
+  text-shadow: 0 0 10px rgba(0, 210, 255, 0.4);
+  pointer-events: none;
+}
+
+/* ─── HUD Top Right (Visit Dropdown) ─── */
+.hud-top-right {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.visit-btn {
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text);
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 4px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+}
+
+.visit-btn:hover {
+  border-color: var(--ion-blue);
+  box-shadow: 0 0 15px rgba(0, 210, 255, 0.3);
+}
+
+.visit-dropdown {
+  display: flex;
+  flex-direction: column;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: none;
+  min-width: 160px;
+  overflow: hidden;
+}
+
+.visit-option {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 3px;
+  padding: 12px 20px;
+  text-align: right;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.visit-option:last-child {
+  border-bottom: none;
+}
+
+.visit-option:hover {
+  background: rgba(0, 210, 255, 0.1);
+  color: var(--text);
+}
+
+/* ─── Enter Earth Button ─── */
+.enter-earth-btn {
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(10px);
+  border: 1px solid #4488cc;
+  color: #fff;
+  font-family: 'Space Mono', monospace;
+  font-size: 16px;
+  letter-spacing: 6px;
+  padding: 16px 32px;
+  cursor: pointer;
+  pointer-events: auto;
+  text-transform: uppercase;
+  box-shadow: 0 0 20px rgba(68, 136, 204, 0.4);
+  transition: all 0.3s ease;
+  animation: pulse-earth 2s infinite;
+}
+
+.enter-earth-btn:hover {
+  background: rgba(68, 136, 204, 0.2);
+  transform: scale(1.05);
+  box-shadow: 0 0 30px rgba(68, 136, 204, 0.8);
+}
+
+@keyframes pulse-earth {
+  0%, 100% { box-shadow: 0 0 20px rgba(68, 136, 204, 0.4); }
+  50% { box-shadow: 0 0 40px rgba(68, 136, 204, 0.8); }
+}
+
+/* ─── Landing Sequence Sequence ─── */
+.landing-scene {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  background: #000;
+}
+
+.landing-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+.landing-text {
+  font-family: 'Space Mono', monospace;
+  font-size: clamp(24px, 4vw, 48px);
+  font-weight: 700;
+  letter-spacing: 12px;
+  color: #fff;
+  text-transform: uppercase;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+  text-align: center;
+}
+
+.hud-bottom-center {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.hud-hint {
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: rgba(255, 255, 255, 0.25);
+  text-transform: uppercase;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 768px) {
+  .specs-section {
+    padding: 80px 16px;
+  }
+  
+  .specs-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .spec-card {
+    padding: 28px 24px;
+  }
+
+  .launch-btn {
+    padding: 16px 32px;
+    letter-spacing: 4px;
+  }
+
+  .planet-label-name {
+    font-size: 14px;
+    letter-spacing: 4px;
+  }
+
+  .planet-label-desc {
+    font-size: 10px;
+  }
+}
